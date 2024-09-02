@@ -324,7 +324,7 @@ First, let's get the documentation GitHub Actions workflow working. The document
         make docs-deploy VERSION="$VERSION"
 ```
 
-Next, on your GitHub repository, go to Settings -> Actions -> General -> Workflow Permissions, and select "Read and write permissions" - this will allow the actions run to publish your documentation. Now, commit your changes to `docs.yaml` and push them to GitHub with
+Next, on your GitHub repository, go to Settings -> Actions -> General -> Workflow Permissions, and select "Read and write permissions" - this will allow the actions run to publish your documentation. Also, go to Settings -> Pages ->  Build and Deployment and set "Source" to "Deploy from a branch" and "Branch" to "gh-pages" "/(root)". Now, commit your changes to `docs.yaml` and push them to GitHub with
 
 ```bash
 git push
