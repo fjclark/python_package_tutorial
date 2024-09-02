@@ -27,10 +27,10 @@ You should have:
 
 First, decide on a name for your project. I've gone with `kcalc` (Kd-Calculator), but I'm sure you or ChatGPT can do better.
 
-Now, create a virtual environment including a few of the tools we'll need, making sure to substitute in your package name for `kcalc`
+Now, create a virtual environment including cookiecutter and a recent version of git, making sure to substitute in your package name for `kcalc`
 
 ```bash
-mamba create -n kcalc python=3.10 git cookiecutter gh
+mamba create -n kcalc python=3.11 git cookiecutter
 mamba activate kcalc
 ```
 
@@ -70,7 +70,7 @@ To install your (empty) package, simply run
 make env
 ```
 
-in the package's base directory. Select No when asked if you want to remove the existing environment.
+in the package's base directory. Select Yes when asked if you want to remove the existing environment.
 
 There's quite a lot going on behind the scenes here. [Make](https://www.gnu.org/software/make/manual/make.html#Overview) is a tool commonly used to build software according to rules specified in a "makefile". Looking in `Makefile` shows the rule:
 
@@ -166,7 +166,7 @@ def test_calc_k():
     assert calc_k(0) == 1
 ```
 
-where `..` specifies that the `conversion` module is located up a directory. You could also do `from kcalc.conversion import calc_k`, but relative imports make it easier to change the package name. We can run the tests with
+where `..` specifies that the `conversion` module is located up a directory. You could also do `from kcalc.conversion import calc_k`, but relative imports make it easier to change the package name. We can run the tests from the base directory with
 
 ```bash
 make test
@@ -202,7 +202,19 @@ Typing
 git status
 ```
 
-will show a list of new files. You can "stage" all of these files to be "commited" with
+will show a list of new and modified files. You can "stage" modified files with
+
+```bash
+git add -u
+```
+
+You can add any desired new files with e.g.
+
+```bash
+git add kcalc/conversion.py
+```
+
+All of these "staged" changes can now be "commited" with
 
 ```bash
 git add -A
@@ -211,10 +223,10 @@ git add -A
 Running `git status` again should now show many files staged to commit. We can now commit them with
 
 ```bash
-git commit -m "Initial commit"
+git commit -m "Add dG to Kd conversion function"
 ```
 
-using `-m` to add a short description of the changes. To write a more detailed description, simply omit `-m "Initial commit"` and you'll be able to edit the commit message with a text editor. A commit is a unit of change, which records a snapshot of your code and specifies the changes made since the last commit to reach the current state. You can see a list of commits with `git log`
+using `-m` to add a short description of the changes. To write a more detailed description, simply omit `-m "Add dG to Kd conversion function"` and you'll be able to edit the commit message with a text editor. A commit is a unit of change, which records a snapshot of your code and specifies the changes made since the last commit to reach the current state. You can see a list of commits with `git log`.
 
 Note that because we have installed and configured the [pre-commit](https://pre-commit.com/) package (see `.pre-commit-config.yaml`), our commit would have been blocked if our code was not correctly formatted. This helps us avoid lots of small commits after each time we format. 
 
@@ -267,7 +279,13 @@ Now, format, lint, stage, and commit your changes as before.
 
 ## 6. Commit and Push to GitHub
 
-Now we have a minimal functional package, let's push it to GitHub with the GitHub CLI. First, log in with
+Now we have a minimal functional package, let's push it to GitHub with the GitHub CLI. First, install the GitHub command line tool
+
+```bash
+mamba install gh
+```
+
+Now, log in with
 
 ```bash
 gh auth login
@@ -380,7 +398,7 @@ If everything looks fine on your local site, you can now commit your changes, pu
 
 ## 8. Versioning
 
-Code versioning is extremely important for reproducibility. We'll use [semantic versioning](https://semver.org/), a widely-adopted versioning scheme which uses the MAJOR.MINOR.PATCH format. We'll version our code `0.1.0`: 
+Code versioning is important for reproducibility. We'll use [semantic versioning](https://semver.org/), a widely-adopted versioning scheme which uses the MAJOR.MINOR.PATCH format. We'll version our code `0.1.0`: 
 
 - Major version 0: Indicates initial development phase and that our package is not yet stable.
 - Minor version 1: First minor release with some initial functionality.
@@ -430,7 +448,7 @@ python
 A nice feature of this template the use of [mike](https://github.com/jimporter/mike) to manage multiple version of your docs. This means that if you change the version and rebuild the docs, the old version of the docs will be accessible through a drop-down menu at the top of the site.
 ## 9. Code Coverage
 
-The final thing we need to get working is the code coverage display - the badge on your README will currently display "unknown". To get this working, we need to configure our repo to work with CodeCov. Sign up to CodeCov with your GitHub account, go to the CodeCov list of your GitHub repos, and select "Configure" for the tutorial repo. Under the "Coverage" tab, from "Step 2", copy the CODECOV_TOKEN. On your GitHub repo, go to Settings -> Secrets and variables -> Actions and add this as a repository secret with the name "CODECOV_TOKEN".
+The final thing we need to get working is the code coverage display - the badge on your README will currently display "unknown". To get this working, we need to configure our repo to work with CodeCov. Sign up to CodeCov with your GitHub account, go to the CodeCov list of your GitHub repos, and select "Configure" for the tutorial repo (you may need to hit "Resync" to get your repo to show up). Under the "Coverage" tab, from "Step 2", copy the CODECOV_TOKEN. On your GitHub repo, go to Settings -> Secrets and variables -> Actions and add this as a repository secret with the name "CODECOV_TOKEN".
 
 Now, make sure that this token is used in the CI workflow by modifying the "CodeCov" section in `ci.yaml` to
 
