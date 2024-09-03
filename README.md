@@ -44,6 +44,7 @@ cookiecutter gh:SimonBoothroyd/python-template
 
 From the options,
 
+- Set the package/ module names to be the same as your project
 - Include CLI
 - Do not include data
 - Include docs
