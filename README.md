@@ -325,13 +325,13 @@ First, let's get the documentation GitHub Actions workflow working. The document
         make docs-deploy VERSION="$VERSION"
 ```
 
-Next, on your GitHub repository, go to Settings -> Actions -> General -> Workflow Permissions, and select "Read and write permissions" - this will allow the actions run to publish your documentation. Also, go to Settings -> Pages ->  Build and Deployment and set "Source" to "Deploy from a branch" and "Branch" to "gh-pages" "/(root)". Now, commit your changes to `docs.yaml` and push them to GitHub with
+Next, on your GitHub repository, go to Settings -> Actions -> General -> Workflow Permissions, and select "Read and write permissions" - this will allow the actions run to publish your documentation. Now, commit your changes to `docs.yaml` and push them to GitHub with
 
 ```bash
 git push
 ```
 
-Check that the "docs" workflow run completes successfully. Click on the "documentation" link at the bottom of `README.md` - this should take you to your newly built site! The homepage will display the content of your `README.md`. There will also be and "API reference" tab, with auto-generated docs for your modules and conversion function, and a "Development" tab, documenting some of the useful `make` commands.
+Check that the "docs" workflow run completes successfully. Finally, go to Settings -> Pages ->  Build and Deployment and set "Source" to "Deploy from a branch" and "Branch" to "gh-pages" "/(root)". After a short wait, your documentation should be ready. Click on the "documentation" link at the bottom of `README.md` - this should take you to your newly built site! The homepage will display the content of your `README.md`. There will also be and "API reference" tab, with auto-generated docs for your modules and conversion function, and a "Development" tab, documenting some of the useful `make` commands.
 
 Where have the docs been built? On your GitHub repo, take a look at your branches. A new branch called `gh-pages` has been generated. Looking at this, we can see that "actions-user" has deployed our docs.
 
